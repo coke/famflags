@@ -30,7 +30,10 @@ my $rows = int ($num_icons / $cols + 1 );
 my $sprite_width  = $cols * $icon_width;
 my $sprite_height = $rows * $icon_height;
 
+GD::Image->trueColor(1);
 my $sprite = GD::Image->new($sprite_width, $sprite_height);
+$sprite->alphaBlending(0);
+$sprite->saveAlpha(1);
 
 my $row = 0;
 my $col = 0;
@@ -61,7 +64,7 @@ foreach my $file (@icons) {
     my $x = $row*$icon_width;
     my $y = $col*$icon_height;
 
-    $sprite->copyMerge($icon,$x,$y,0,0,$icon_width,$icon_height, 100);
+    $sprite->copy($icon,$x,$y,0,0,$icon_width,$icon_height);
     if ($col++ > $cols) {
         $row++;
         $col = 0;
