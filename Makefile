@@ -15,4 +15,4 @@ release:
 	echo "upload https://github.com/coke/famflags/downloads"
 
 clean:
-	rm -rf build
+	rm -rf build famflags*.zip
