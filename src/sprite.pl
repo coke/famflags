@@ -51,7 +51,7 @@ my $html = <<"END_HTML";
 <head>
 <link rel="stylesheet" href="flags.css">
 </head>
-<body>
+<body style="background-color:#DDD">
 END_HTML
 
 foreach my $file (@icons) {
