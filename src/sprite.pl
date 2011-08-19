@@ -35,8 +35,6 @@ my $sprite = GD::Image->new($sprite_width, $sprite_height);
 $sprite->alphaBlending(0);
 $sprite->saveAlpha(1);
 
-my $row = 0;
-my $col = 0;
 my $css = <<"END_CSS";
 /* $site_url ($VERSION) */
 .flag{
@@ -53,10 +51,27 @@ my $html = <<"END_HTML";
 <!-- $site_url ($VERSION) -->
 <head>
 <link rel="stylesheet" href="flags.css">
+<style type="text/css">.country{float:left;width:200px;height:35px;padding:5px;}</style>
 </head>
-<body style="background-color:#DDD">
+<body style="background-color:#EEE">
+<h1>Sample of all ISO 3166-1 country flags.</h1>
+<div style="padding-bottom:10px;"><em>And some extras.</em></div>
 END_HTML
 
+my $datafile = "data/iso_3166_1.txt";
+
+open my $df, "<", $datafile;
+
+my %countries;
+foreach my $row (<$df>) {
+    chomp($row);
+    my ($code, $country) = split /\|/, $row;
+    $countries{$code} = $country;
+}
+close $df;
+
+my $row = 0;
+my $col = 0;
 foreach my $file (@icons) {
     open my $PNG, "<", $file;
     my $icon = GD::Image->newFromPng($PNG);
@@ -74,7 +89,13 @@ foreach my $file (@icons) {
     $x*=-1;
     $y*=-1;
     $css .= "\n.flag." . $code . "{background-position:" . $x . "px ". $y . "px}";
-    $html .= "<span class=\"flag $code\">&nbsp;</span> $code<br>\n";
+    $html .= "<div class=\"country\"><span class=\"flag $code\">&nbsp;</span>";
+    if (exists $countries{uc $code}) {
+        $html .= $countries{uc $code} . " (" . uc $code . ")";
+     } else {
+        $html .= $code;
+     }
+     $html .= "</div>\n";
 }
 
 $html .= "</body></html>";
