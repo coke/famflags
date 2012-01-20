@@ -51,7 +51,7 @@ my $html = <<"END_HTML";
 <!-- $site_url -->
 <head>
 <link rel="stylesheet" href="flags.css">
-<style type="text/css">.country{float:left;width:200px;height:35px;padding:5px;}</style>
+<style type="text/css">.country{float:left;width:200px;height:4em;padding:5px;}</style>
 </head>
 <body style="background-color:#EEE">
 <h1>Sample of all ISO 3166-1 country flags.</h1>
