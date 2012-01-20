@@ -81,7 +81,7 @@ foreach my $file (@icons) {
     my $y = $col*$icon_height;
 
     $sprite->copy($icon,$x,$y,0,0,$icon_width,$icon_height);
-    if ($col++ > $cols) {
+    if (++$col > $cols) {
         $row++;
         $col = 0;
     }
