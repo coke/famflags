@@ -16,7 +16,6 @@ my $target_css    = "flags.css";
 my $target_html   = "index.html";
 
 my $site_url = "https://github.com/coke/famflags";
-my $VERSION  = "0.9";
 
 my $icon_height = 11;
 my $icon_width  = 16;
@@ -36,7 +35,7 @@ $sprite->alphaBlending(0);
 $sprite->saveAlpha(1);
 
 my $css = <<"END_CSS";
-/* $site_url ($VERSION) */
+/* $site_url */
 .flag{
 float:left;
 margin: 5px 5px 0 0;
@@ -48,7 +47,7 @@ END_CSS
 
 my $html = <<"END_HTML";
 <!DOCTYPE html>
-<!-- $site_url ($VERSION) -->
+<!-- $site_url -->
 <head>
 <link rel="stylesheet" href="flags.css">
 <style type="text/css">.country{float:left;width:200px;height:35px;padding:5px;}</style>
@@ -65,7 +64,7 @@ open my $df, "<", $datafile;
 my %countries;
 foreach my $row (<$df>) {
     chomp($row);
-    my ($code, $country) = split /\|/, $row;
+    my ($country, $code) = split /;/, $row;
     $countries{$code} = $country;
 }
 close $df;
