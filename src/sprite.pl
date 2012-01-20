@@ -65,6 +65,7 @@ my %countries;
 foreach my $row (<$df>) {
     chomp($row);
     my ($country, $code) = split /;/, $row;
+    $code = substr($code,0,2);
     $countries{$code} = $country;
 }
 close $df;
@@ -90,7 +91,7 @@ foreach my $file (@icons) {
     $css .= "\n.flag." . $code . "{background-position:" . $x . "px ". $y . "px}";
     $html .= "<div class=\"country\"><span class=\"flag $code\">&nbsp;</span>";
     if (exists $countries{uc $code}) {
-        $html .= $countries{uc $code} . " (" . uc $code . ")";
+        $html .= $countries{uc $code} . " (" .  uc $code . ")";
      } else {
         $html .= $code;
      }
