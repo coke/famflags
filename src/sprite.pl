@@ -50,6 +50,7 @@ my $html = <<"END_HTML";
 <!DOCTYPE html>
 <!-- $site_url -->
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="flags.css">
 <style type="text/css">.country{float:left;width:200px;height:4em;padding:5px;}</style>
 </head>
