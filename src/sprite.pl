@@ -24,7 +24,8 @@ my @icons = <png/*.png>;
 # Make the dimensions square-ish. Makes it easier to preview the sprite.
 my $num_icons = scalar @icons;
 my $cols = int sqrt $num_icons;
-my $rows = int ($num_icons / $cols + 1 );
+my $rows = int ($num_icons / $cols);
+$rows++ while $rows*$cols < $num_icons;
 
 my $sprite_width  = $cols * $icon_width;
 my $sprite_height = $rows * $icon_height;
