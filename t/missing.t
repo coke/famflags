@@ -17,10 +17,11 @@ my @data = <$df>;
 close $df;
 
 plan tests => scalar @data;
-
 foreach my $row (@data) {
     chomp $row;  
-    my ($code, $name) = split /\|/, $row;
-    ok(-f "png/" . lc $code . ".png", $name);
+    my ($name, $code) = split /;/, $row;
+    $code = lc substr($code,0,2);
+    $code="" unless defined($code);
+    ok(-f "png/" . $code . ".png", $name);
 }
 

@@ -8,9 +8,9 @@ Pull ISO 3166-1 data from wikipedia.
 
 =cut
 
-my $url = "http://en.wikipedia.org/wiki/ISO_3166-1";
+my $url = "http://www.iso.org/iso/list-en1-semic-3.txt";
 
-# Wikipedia blocks LWP::Simple...
+# previous site blocked LWP::Simple, too lazy to change it.
 
 my $content;
 {
@@ -19,28 +19,8 @@ my $content;
     $content = <$data>;
 }
 
-$content =~ s{.*?Officially assigned code}{}smi;
-$content =~ s{.*?(<table)}{$1}smi;
-$content =~ s{(</table>).*}{$1}smi;
+my @content = grep { ! /^\s+$/ && ! /ISO 3166-1/}
+              map  {chomp; $_}
+              split /\n/, $content;
 
-my @rows = split /<tr>/, $content;
-
-my @data = ();
-foreach my $row (@rows) {
-    my @cells = split /<td>/, $row;
-    my $rd = [];
-    foreach my $cell (@cells) {
-        chomp $cell;
-        $cell =~ s/<[^>]*>//g;
-        $cell =~ s/&#160;//g;
-        push $rd, $cell;
-    }
-    push @data, $rd;
-}
-
-foreach my $row (@data) {
-    my $code = $row->[2];
-    my $name = $row->[1];
-    next unless $code;
-    say "$code|$name";
-}
+say join("\n", @content);
