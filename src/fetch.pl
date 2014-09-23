@@ -1,26 +1,36 @@
-#! /usr/bin/perl
+use v6;
 
-use Modern::Perl;
+use LWP::Simple;
 
-=head1 fetch.pl
+# Pull ISO 3166-1 data from wikipedia.
+# Text is available under the Creative Commons Attribution-ShareAlike License 
 
-Pull ISO 3166-1 data from wikipedia.
+sub MAIN() {
 
-=cut
+    # Extract data from wikipedia.
+    my $url = "http://en.wikipedia.org/wiki/ISO_3166-2";
+    my $response = LWP::Simple.get($url);
 
-my $url = "http://www.iso.org/iso/list-en1-semic-3.txt";
+    my @row;
+    my @data;
+    for $response.split("\n") -> $_ {
+        if / '<th>Country name</th>' / ff / '</table>' / {
+            if / '</tr>' / {
+                if +@row {
+                    @data.push([@row]);
+                }
+                @row = ();
+            }
+            if / '<td>' .*?  '<a' <-[>]>* '>' (.+?) '</a>' .* '</td>'/ {
+                @row.push(~$/[0]);
+            }
+            
+            # only process the first table. 
+            last if / '</table>' /;
+        }
+    }
 
-# previous site blocked LWP::Simple, too lazy to change it.
-
-my $content;
-{
-    open(my $data, "curl $url |");
-    local $/;
-    $content = <$data>;
+    for @data.sort:{$_[1].uc} -> @row {
+        say @row[1].uc ~ ";" ~ @row[0];
+    }
 }
-
-my @content = grep { ! /^\s+$/ && ! /ISO 3166-1/}
-              map  {chomp; $_}
-              split /\n/, $content;
-
-say join("\n", @content);

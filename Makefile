@@ -6,7 +6,7 @@ test:
 	prove t
 
 fetch:
-	perl src/fetch.pl > data/iso_3166_1.txt
+	perl6 src/fetch.pl > data/iso_3166_1.txt
 
 release:
 	git tag RELEASE_${VERSION}
