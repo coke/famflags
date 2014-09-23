@@ -13,7 +13,7 @@ sub MAIN() {
 
     my @row;
     my @data;
-    for $response.split("\n") -> $_ {
+    for $response.lines -> $_ {
         if / '<th>Country name</th>' / ff / '</table>' / {
             if / '</tr>' / {
                 if +@row {
