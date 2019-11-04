@@ -24,4 +24,4 @@ under the Artistic 2.0 license.
 
 If you find these icons useful, please donate via paypal to to the
 original artist mjames@gmail.com (or click the donate button available at
-[The original site](http://www.famfamfam.com/lab/icons/silk)).
+[the original site](http://www.famfamfam.com/lab/icons/silk)).
